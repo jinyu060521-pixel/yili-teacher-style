@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>依力老师风格包 · 让AI用依力老师的方式讲课</title>
+<meta name="description" content="把45小时大学AI课程的讲课风格蒸馏成可安装的AI技能：口头禅频率实测、教学装置、9份知识库。Claude一键安装，任何AI可用。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --board:#23302a;
+  --board-deep:#1a241f;
+  --chalk:#efe9d8;
+  --chalk-dim:#b3ad99;
+  --chalk-yellow:#e9c96b;
+  --red:#d0684e;
+  --paper:#f4efe0;
+  --paper-ink:#3a342a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--board);
+  color:var(--chalk);
+  font-family:"Noto Serif SC","Songti SC",SimSun,serif;
+  line-height:1.9;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+}
+.hand{
+  font-family:"Ma Shan Zheng","Kaiti SC","STKaiti",KaiTi,serif;
+  font-weight:400;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+
+/* 黑板顶部：木条 */
+.rail{height:14px;background:linear-gradient(180deg,#4a3a28,#33261a);box-shadow:0 2px 8px rgba(0,0,0,.5)}
+
+/* hero */
+.hero{padding:72px 0 56px;position:relative}
+.eyebrow{font-size:15px;color:var(--chalk-dim);letter-spacing:.35em;margin-bottom:18px}
+h1{
+  font-size:clamp(44px,8vw,76px);
+  line-height:1.25;
+  color:var(--chalk);
+  text-shadow:0 0 6px rgba(239,233,216,.12);
+}
+h1 .line{display:block}
+.underline{
+  display:inline-block;position:relative;
+}
+.underline::after{
+  content:"";position:absolute;left:-4px;right:-8px;bottom:6px;height:14px;
+  background:var(--red);opacity:.85;z-index:-1;transform:rotate(-1.2deg);
+  border-radius:2px;
+}
+.hero .sub{
+  margin-top:26px;max-width:600px;color:var(--chalk-dim);font-size:17px;
+}
+.hero .sub b{color:var(--chalk-yellow);font-weight:600}
+
+/* 统计粉笔记号 */
+.stats{
+  margin-top:44px;display:flex;flex-wrap:wrap;gap:10px 0;
+  border-top:1px dashed rgba(239,233,216,.18);border-bottom:1px dashed rgba(239,233,216,.18);
+  padding:18px 0;
+}
+.stat{flex:1 1 33%;min-width:150px;text-align:left}
+.stat .num{font-size:34px;color:var(--chalk-yellow);font-weight:900;letter-spacing:.02em}
+.stat .label{font-size:13px;color:var(--chalk-dim)}
+
+/* 按钮 */
+.ctas{margin-top:36px;display:flex;flex-wrap:wrap;gap:14px}
+.btn{
+  display:inline-block;padding:13px 28px;border-radius:8px;
+  font-size:16px;text-decoration:none;transition:transform .15s ease, box-shadow .15s ease;
+  border:1px solid transparent;
+}
+.btn:focus-visible{outline:3px solid var(--chalk-yellow);outline-offset:3px}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--chalk-yellow);color:#2a2410;font-weight:600;box-shadow:0 4px 0 rgba(0,0,0,.3)}
+.btn-primary:hover{box-shadow:0 6px 0 rgba(0,0,0,.3)}
+.btn-ghost{color:var(--chalk);border-color:rgba(239,233,216,.4)}
+.btn-ghost:hover{border-color:var(--chalk)}
+
+/* 章节 */
+section{padding:64px 0}
+h2{
+  font-size:34px;margin-bottom:26px;color:var(--chalk);
+}
+h2::before{
+  content:"";display:inline-block;width:10px;height:10px;border-radius:50%;
+  background:var(--chalk-yellow);margin-right:14px;vertical-align:6px;
+  box-shadow:0 0 8px rgba(233,201,107,.5);
+}
+.prose{max-width:680px;color:var(--chalk-dim)}
+.prose b{color:var(--chalk);font-weight:600}
+.prose p+p{margin-top:14px}
+
+/* 讲义便签 */
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px;margin-top:8px}
+.note{
+  background:var(--paper);color:var(--paper-ink);
+  border-radius:3px;padding:22px 20px 26px;position:relative;
+  text-decoration:none;display:block;
+  box-shadow:0 6px 14px rgba(0,0,0,.35);
+  transform:rotate(-1deg);
+  transition:transform .18s ease;
+}
+.note:nth-child(even){transform:rotate(1.2deg)}
+.note:hover{transform:rotate(0) translateY(-4px)}
+.note:focus-visible{outline:3px solid var(--chalk-yellow);outline-offset:3px}
+.note::before{
+  content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-3deg);
+  width:64px;height:20px;background:rgba(233,201,107,.6);
+  border:1px solid rgba(0,0,0,.08);
+}
+.note .t{font-size:18px;font-weight:900;line-height:1.4}
+.note .d{font-size:13px;margin-top:8px;opacity:.8}
+.note .s{position:absolute;right:12px;bottom:10px;font-size:12px;opacity:.6}
+.note .tag{
+  display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;
+  background:var(--paper-ink);color:var(--paper);margin-top:10px;
+}
+.note .tag.rec{background:var(--red);color:#fff}
+
+/* 用法步骤 */
+.steps{counter-reset:step;list-style:none;margin-top:8px}
+.steps li{
+  position:relative;padding:0 0 34px 64px;max-width:680px;color:var(--chalk-dim);
+}
+.steps li::before{
+  counter-increment:step;content:counter(step, cjk-ideographic);
+  position:absolute;left:0;top:-6px;width:44px;height:44px;
+  border:1.5px solid var(--chalk-yellow);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--chalk-yellow);font-size:20px;
+}
+.steps li:not(:last-child)::after{
+  content:"";position:absolute;left:21px;top:44px;bottom:0;
+  border-left:1px dashed rgba(233,201,107,.4);
+}
+.steps .st{display:block;font-size:19px;color:var(--chalk);font-weight:600;margin-bottom:6px}
+.steps code{
+  background:rgba(239,233,216,.1);padding:1px 8px;border-radius:4px;
+  font-size:15px;color:var(--chalk-yellow);
+}
+
+/* 知识库目录 */
+.syllabus{list-style:none;columns:2;column-gap:48px;margin-top:8px}
+.syllabus li{
+  break-inside:avoid;padding:12px 0;border-bottom:1px dashed rgba(239,233,216,.15);
+  display:flex;align-items:baseline;gap:14px;color:var(--chalk-dim);
+}
+.syllabus .no{font-size:13px;color:var(--red);flex-shrink:0}
+.syllabus .nm{color:var(--chalk);font-weight:600;font-size:17px}
+.syllabus .dc{display:block;font-size:13px;margin-top:2px;color:var(--chalk-dim)}
+@media (max-width:640px){.syllabus{columns:1}}
+
+/* 引用 */
+.quote{
+  text-align:center;padding:88px 0 64px;
+}
+.quote .text{
+  font-size:clamp(24px,4vw,34px);line-height:1.7;color:var(--chalk);
+  max-width:640px;margin:0 auto;
+}
+.quote .who{margin-top:20px;color:var(--chalk-dim);font-size:15px;letter-spacing:.2em}
+
+/* footer */
+footer{
+  border-top:1px solid rgba(239,233,216,.15);
+  padding:28px 0 56px;color:var(--chalk-dim);font-size:13px;text-align:center;line-height:2;
+}
+footer a{color:var(--chalk-yellow);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* 载入：一次粉笔显现 */
+@keyframes chalkIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero h1,.hero .sub,.stats,.ctas{animation:chalkIn .8s ease both}
+.hero .sub{animation-delay:.12s}
+.stats{animation-delay:.22s}
+.ctas{animation-delay:.32s}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<div class="rail"></div>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">依力老师风格蒸馏项目</p>
+    <h1 class="hand">
+      <span class="line">让AI用<span class="underline">依力老师</span>的</span>
+      <span class="line">方式讲课</span>
+    </h1>
+    <p class="sub">把一门45小时大学AI课程的讲课风格，蒸馏成一个可安装的AI技能。<b>1483次"对不对"</b>、<b>1949次"各位同学"</b>，口头禅频率全部来自116万字语料的真实统计。</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="yili-style-full.skill" download>下载完整版 · 36KB</a>
+      <a class="btn btn-ghost" href="#how">先看看怎么用</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num">19</div><div class="label">课程视频，约45小时</div></div>
+      <div class="stat"><div class="num">116万</div><div class="label">字转录语料</div></div>
+      <div class="stat"><div class="num">9</div><div class="label">份主题知识库</div></div>
+    </div>
+  </header>
+
+  <section id="about">
+    <h2 class="hand">这是什么</h2>
+    <div class="prose">
+      <p>依力老师（B站：<b>依问三不知</b>，浙大控制+竺院创业强化班）是大学AI课程的讲师，教AI原理、Python和大学软实力。他的课有三个签名：口头禅<b>"对不对"</b>、用真实大学故事讲道理、以及那句<b>"在你心中埋下一个种子"</b>。</p>
+      <p>这个项目把他的<b>说话方式</b>和<b>教学方式</b>做成了可复制的风格包——装进Claude，AI就用他的口吻给你讲课答疑；不只风格，他讲过的实习、进组、竞赛、面试、论文、提问、AI原理、Python，也整理成了<b>9份知识库</b>，回答用的都是他本人的真实方法论。</p>
+    </div>
+  </section>
+
+  <section id="download">
+    <h2 class="hand">领取讲义</h2>
+    <div class="notes">
+      <a class="note" href="yili-style-full.skill" download>
+        <span class="tag rec">推荐</span>
+        <div class="t">完整版 .skill</div>
+        <div class="d">风格 + 9份知识库，Claude一键安装，Codex/GPT直接打开</div>
+        <span class="s">36KB</span>
+      </a>
+      <a class="note" href="yili-style-lite.skill" download>
+        <div class="t">轻量版 .skill</div>
+        <div class="d">纯风格，不含知识库，只想学说话方式选这个</div>
+        <span class="s">5KB</span>
+      </a>
+      <a class="note" href="yili-style-pack.zip" download>
+        <div class="t">完整包 .zip</div>
+        <div class="d">全部22个文件：skill、知识库、风格手册、金句库、示例课</div>
+        <span class="s">104KB</span>
+      </a>
+      <a class="note" href="yili-style-prompt.txt" download>
+        <div class="t">通用提示词</div>
+        <div class="d">一段话粘贴给任何AI，GPT免费版、豆包、Kimi都行</div>
+        <span class="s">6KB</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2 class="hand">怎么用</h2>
+    <ol class="steps">
+      <li>
+        <span class="st">用 Claude</span>
+        点开 <code>.skill</code> 文件一键安装，然后在任意对话里说：<code>用依力老师的风格讲XX</code>。
+      </li>
+      <li>
+        <span class="st">用 GPT / 豆包 / Kimi / Codex</span>
+        把文件直接发给AI，说一句 <code>按这个来</code>；不方便传文件就粘贴通用提示词。
+      </li>
+      <li>
+        <span class="st">不玩 AI</span>
+        解压完整包，直接读知识库——实习、进组、竞赛、面试、论文的攻略都在里面。
+      </li>
+    </ol>
+  </section>
+
+  <section id="kb">
+    <h2 class="hand">知识库目录</h2>
+    <ul class="syllabus">
+      <li><span class="no">01</span><div><span class="nm">实习求职</span><span class="dc">Timing四象限 · 简历翻译 · 当天就投</span></div></li>
+      <li><span class="no">02</span><div><span class="nm">科研进组</span><span class="dc">进组三件套 · 选导师三特征 · 写邮件三件事</span></div></li>
+      <li><span class="no">03</span><div><span class="nm">竞赛决策</span><span class="dc">个体户vs吃资源 · 找队友三标准</span></div></li>
+      <li><span class="no">04</span><div><span class="nm">面试选拔</span><span class="dc">面试三问 · 真诚打法</span></div></li>
+      <li><span class="no">05</span><div><span class="nm">论文与AI创作</span><span class="dc">AI写论文四步 · 让作品替你说话</span></div></li>
+      <li><span class="no">06</span><div><span class="nm">心态与提问</span><span class="dc">大一绩点主线 · 提问四原则</span></div></li>
+      <li><span class="no">07</span><div><span class="nm">大学软实力</span><span class="dc">拒绝 · 演讲 · 辩论 · 谈判 · 答辩</span></div></li>
+      <li><span class="no">08</span><div><span class="nm">AI原理</span><span class="dc">数据-模型-损失-优化四件套到Transformer</span></div></li>
+      <li><span class="no">09</span><div><span class="nm">Python编程</span><span class="dc">8节课知识点 · 17条口诀</span></div></li>
+    </ul>
+  </section>
+
+  <div class="quote">
+    <p class="text hand">"我并不求把什么方法论教给你们，但是呢，在你心中埋下一个种子。"</p>
+    <p class="who">—— 依力老师</p>
+  </div>
+
+  <footer>
+    <p>本项目仅含风格分析方法与知识归纳，不含课程转录稿原文。课程版权归依力老师及课程方所有。</p>
+    <p>本站内容遵循 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY 4.0</a> 许可 · 依力老师风格蒸馏项目</p>
+  </footer>
+</div>
+</body>
+</html>
